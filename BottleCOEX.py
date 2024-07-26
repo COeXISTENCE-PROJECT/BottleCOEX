@@ -31,7 +31,7 @@ DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)
 DEFAULT_LAMBDA_CAV = float(paramsData["defaultLambdaCAV"])                              
 DEFAULT_LAMBDA_HDV = float(paramsData["defaultLambdaHDV"])                              
 DEFAULT_CAV_TARGET = (paramsData["defaultCAVTarget"])                              
-DEFAULT_FLEET_SHARE = int(float(paramsData["defaultFleetSize"])*mult)
+DEFAULT_FLEET_SIZE = int(float(paramsData["defaultFleetSize"]))
 DEFAULT_FLEET_INTRODUCTION = paramsData["defaultFleetIntroduction"]
 DEFAULT_FLEET_MODE = paramsData["defaultFleetMode"]
 
@@ -243,10 +243,11 @@ def createNetwork(dataN):
 def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode = DEFAULT_FLEET_MODE, Model_Name = DEFAULT_MODEL_NAME,
               Alpha_Zero = DEFAULT_ALPHA_ZERO, Epsilon_Zero = DEFAULT_EPSILON_ZERO, Logit_Exp_Coeff = DEFAULT_LOGIT_PARAM,
               Initial_Knowledge = DEFAULT_INITIAL_KNOWLEDGE, Initial_Choice = DEFAULT_INITIAL_CHOICE, Only_Experience = DEFAULT_ONLY_EXPERIENCE,
-              Fleet_size = DEFAULT_FLEET_SHARE, Fleet_introduction = DEFAULT_FLEET_INTRODUCTION,
+              Fleet_size = DEFAULT_FLEET_SIZE, Fleet_introduction = DEFAULT_FLEET_INTRODUCTION,
               LambdaHDV = DEFAULT_LAMBDA_HDV, LambdaCAV = DEFAULT_LAMBDA_CAV, CAVTarget = DEFAULT_CAV_TARGET, jrange = DEFAULT_JRANGE,
               totalND = DEFAULT_TOTALND):
 
+    #####Normalize variables by mult
     totalND = int(mult*(totalND))
     Fleet_size = int((totalND) * Fleet_size)
     #####Create human drivers########
