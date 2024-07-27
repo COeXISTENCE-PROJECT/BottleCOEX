@@ -1,5 +1,5 @@
 {
 "Links":{"NumberOfLinks":3, "Capacities":[0.3, 0.3, 0.8], "Powers": [2,2,2], "t0links":[5.0, 5.0, 15.0], "kappas":[5.0, 5.0, 15.0]},
 "Routes" : {"NumberOfRoutes":3, "LinksMatrix": [[1,0,0],[0,1,0],[0,0,1]]},
-"RouteLabels":["A","B","C"],
+"RouteLabels":["A","B","C"]
 }
