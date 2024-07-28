@@ -1,0 +1,9 @@
+{
+"name": "Logit",
+"Xaxis": "Alpha_Zero",
+"Yaxis": "Logit_Exp_Coeff",
+"XaxisName": "\u03b1",
+"YaxisName": "\u03b3",
+"Xval": [0.1, 0.2, 0.5, 1.0],
+"Yval": [3.0, 2.5, 2.0, 1.5, 1.0, 0.7, 0.5, 0.2, 0.1, 0.01]
+}

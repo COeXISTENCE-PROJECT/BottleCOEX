@@ -1,0 +1,11 @@
+{
+"name": "Mixed",
+"Xaxis": "Model_Name",
+"Yaxis": "Logit_Exp_Coeff",
+"XaxisName": "Model",
+"oYaxisName": "Init_Choice",
+"YaxisName": "\u03b3",
+"Xval": ["Logit", "Gumbel", "GumbelEps"],
+"oYval": ["Random", "Argmin"],
+"Yval": [3.0, 2.5, 2.0, 1.5, 1.0, 0.7, 0.5, 0.2, 0.1, 0.01]
+}

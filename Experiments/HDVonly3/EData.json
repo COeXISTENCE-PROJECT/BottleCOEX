@@ -1,0 +1,9 @@
+{
+"name": "Logit",
+"Xaxis": "Initial_Knowledge",
+"Yaxis": "Initial_Choice",
+"XaxisName": "Init_Knowl",
+"YaxisName": "Init_Choice",
+"Xval": ["FreeFlow", "Optimistic", "Pessimistic"],
+"Yval": ["Random", "Argmin"]
+}

@@ -1,0 +1,9 @@
+{
+"name": "Logit",
+"Xaxis": "Only_Experience",
+"Yaxis": "Logit_Exp_Coeff",
+"XaxisName": "Only_Experience",
+"YaxisName": "\u03b3",
+"Xval": [true, false],
+"Yval": [3.0, 2.5, 2.0, 1.5, 1.0, 0.7, 0.5, 0.2, 0.1, 0.01]
+}

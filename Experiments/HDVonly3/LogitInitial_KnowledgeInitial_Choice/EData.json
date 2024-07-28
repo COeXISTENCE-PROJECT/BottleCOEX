@@ -1,0 +1,11 @@
+{
+"name": "Logit",
+"Xaxis": "Initial_Knowledge",
+"Yaxis": "Initial_Choice",
+"XaxisName": "Init_Knowl",
+"YaxisName": "Init_Choice",
+"oYaxisName": "\u03b3",
+"Xval": ["FreeFlow", "Optimistic", "Pessimistic"],
+"Yval": ["Random", "Argmin"],
+"oYval": [3.0, 2.5, 2.0, 1.5, 1.0, 0.7, 0.5, 0.2, 0.1, 0.01]
+}

@@ -1,0 +1,10 @@
+{
+"name": "EpsGreedy",
+"Xaxis": "Initial_Knowledge",
+"Yaxis": "Epsilon_Zero",
+"XaxisName": "Initial_Knowledge",
+"YaxisName": "\u03b5",
+"Xval": ["FreeFlow", "Optimistic", "Pessimistic"],
+"Yval": [0.01, 0.1, 0.2, 0.5],
+"oYval": [3.0, 2.5, 2.0, 1.5, 1.0, 0.7, 0.5, 0.2, 0.1, 0.01]
+}

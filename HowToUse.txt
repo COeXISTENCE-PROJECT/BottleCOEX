@@ -1,0 +1,27 @@
+1) Run BottleCOEX.py
+The simulator reads the path specified in Config.json and loads from it the files 
+EData.json
+paramsData.json
+and network description files (by default only two-route bottleneck Net2Plain, sample other networks are in ./Networks).
+-> The default path: 0 is the current folder and it contains a sample experiment which runs and produces output quickly.
+-> To use data from a different experiment, set the path number to a different value (to reproduce the experiments stored in ./Experiments).
+-> To create your own experiment modify files EData.json and/or paramsData.json and/or add a new path where the data for experiment are contained. Allowed parameter values are specified in the file "SimulatorParamNames.txt".
+
+2) The output of BottleCOEX.py is saved into the path folder in a subfolder with name dependent on the experiment name and parameters which are varied. E.g. for the values from EData.json:
+"name": "test",
+"Xaxis": "CAVTarget",
+"Yaxis": "Fleet_size", 
+it creates a folder testCAVTargetFleet_size
+containing .csv files with the experiment results for different parameter values.
+The files EData.json, paramsData.json as well as network description files are also copied into the folder. 
+
+3) Run BottlePlotterTimeDep.py
+This plotter displays the results of experiments using the output .csv files generated in 2) as a grid of time(day)-dependent plots of travel times and vehicle counts. In particular, it generates the plots used in the Appendix (Supplementary Figures) to the manuscript submitted to Nature Communications. 
+
+4) Run   TODOTODO
+This plotter plots the summary figures used in the manuscript submitted to Nature Communications. 
+
+
+
+Additional info: The folder ./Experiments contains not only the experiment descriptions files EData.json and paramsData.json as well as Network description files but also, for the experiments used in the Appendix, the sample generated output files. Note that every run of BottleCOEX.py uses a different random seed so the output is not exactly the same, but the qualitative properties reported in the paper are unchanged.
+The actual data used to generate the plots for the main paper is contained in folder ./DataMainPaper

@@ -9,8 +9,13 @@ import pandas as pd
 from numpy import random
 from matplotlib import pyplot as plt
 
+fC = open("Config.json")
+dataC = json.load(fC)
+fC.close()
+datadirpath =  dataC[("path" + dataC["whichPath"])]
+
 inputFileName = 'paramsData'
-f = open(inputFileName + '.json')
+f = open(datadirpath + inputFileName + '.json')
 paramsData = json.load(f)
 f.close()
 
@@ -337,7 +342,7 @@ def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fle
         try:
             if(j == NetworkDayChange[curNetwork]):
                 curNetwork += 1
-                fN = open(RoadNetworks[curNetwork] + ".json")
+                fN = open(datadirpath + RoadNetworks[curNetwork] + ".json")
                 dataN = json.load(fN)
                 fN.close()
                 NL, Links = createNetwork(dataN)
@@ -406,8 +411,8 @@ def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fle
 
 ###############Main##################################
 #read config, network(N) and experiment (E) data from files
-f = open(inputFileName + '.json')
-fE = open('EData.json')
+f = open(datadirpath + inputFileName + '.json')
+fE = open(datadirpath + 'EData.json')
 data = json.load(f)
 dataE = json.load(fE)
 f.close()
@@ -415,7 +420,7 @@ fE.close()
 
 RoadNetworks = data["RoadNetworks"]
 NetworkDayChange = data["NetworkDayChange"]
-fN = open(RoadNetworks[0] + ".json")
+fN = open(datadirpath + RoadNetworks[0] + ".json")
 dataN = json.load(fN)
 fN.close()
 
@@ -431,7 +436,7 @@ for r in range(NR):
 ENAME = dataE["name"]
 EXaxis = dataE["Xaxis"]
 EYaxis = dataE["Yaxis"]
-EDIRNAME = (ENAME + EXaxis + EYaxis)
+EDIRNAME = (datadirpath + ENAME + EXaxis + EYaxis)
 EXval = [(x) for x in(dataE["Xval"])]
 EYval = [(x) for x in(dataE["Yval"])]
 EXvalN = len(EXval)

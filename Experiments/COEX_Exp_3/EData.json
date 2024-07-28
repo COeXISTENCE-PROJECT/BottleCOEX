@@ -1,0 +1,9 @@
+{
+"name": "COEX_Exp3",
+"Yaxis": "totalND",
+"Xaxis": "Fleet_size",
+"YaxisName": "Congestion",
+"XaxisName": "sh",
+"Yval": [0.25, 0.5, 0.8, 0.9, 1.0, 1.1, 1.2, 1.4, 1.7, 1.9, 2.1, 2.3, 2.6],
+"Xval": [0.0, 0.001, 0.01, 0.1, 0.2, 0.3, 0.5, 0.7, 0.9, 0.99, 0.999, 1.0]
+}

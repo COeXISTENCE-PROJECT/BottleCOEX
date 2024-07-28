@@ -3,19 +3,23 @@ import pandas as pd
 import json
 from matplotlib import pyplot as plt
 
-dirpath=""
-fE = open(dirpath + 'EData.json')
+fC = open("Config.json")
+dataC = json.load(fC)
+fC.close()
+datadirpath =  dataC[("path" + dataC["whichPath"])]
+
+fE = open(datadirpath + 'EData.json')
 dataE = json.load(fE)
 fE.close()
-f = open(dirpath + 'paramsData.json')
+f = open(datadirpath + 'paramsData.json')
 data = json.load(f)
 f.close()
-fN = open(dirpath + data["RoadNetworks"][0] + ".json")
+fN = open(datadirpath + data["RoadNetworks"][0] + ".json")
 dataN = json.load(fN)
 fN.close()
 
 EDIRNAME = dataE["name"] + dataE["Xaxis"] + dataE["Yaxis"]
-dirpath = "./" + EDIRNAME + "/"
+dirpath = datadirpath + "./" + EDIRNAME + "/"
 
 NR = int(dataN["Routes"]["NumberOfRoutes"])
 RouteLabels = dataN["RouteLabels"]
