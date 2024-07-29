@@ -9,10 +9,22 @@ import pandas as pd
 from numpy import random
 from matplotlib import pyplot as plt
 
-fC = open("Config.json")
+from keychain import Keychain as kc
+
+
+params = open(kc.INPUT_FILE)
+params = json.load(params)
+
+config_params = params[kc.CONFIG]
+data_params = params[kc.PARAMS_DATA]
+datadirpath = config_params["path" + config_params["whichPath"]]
+
+
+"""fC = open("Config.json")
 dataC = json.load(fC)
 fC.close()
 datadirpath =  dataC[("path" + dataC["whichPath"])]
+print("\n\ndatadirpath is: ", datadirpath, "\n\n\n")"""
 
 inputFileName = 'paramsData'
 f = open(datadirpath + inputFileName + '.json')
@@ -235,12 +247,12 @@ def eps_greedy(epsg, randVal, randRange, defbest):
 def BPR(t0, kappa, cap, power, count):
     return t0 + kappa * (((count) / cap) ** power)
     
-def createNetwork(dataN):
+def createNetwork(net_params):
     LinksNew = []
-    NLNew = int(dataN["Links"]["NumberOfLinks"])
+    NLNew = int(net_params["Links"]["NumberOfLinks"])
     for l in range(NLNew):
-        LinksNew.append(Link(float(dataN["Links"]["t0links"][l]), float(dataN["Links"]["kappas"][l]),
-                             mult*float(dataN["Links"]["Capacities"][l]), int(dataN["Links"]["Powers"][l])))
+        LinksNew.append(Link(float(net_params["Links"]["t0links"][l]), float(net_params["Links"]["kappas"][l]),
+                             mult*float(net_params["Links"]["Capacities"][l]), int(net_params["Links"]["Powers"][l])))
     return NLNew, LinksNew
 
 
@@ -343,9 +355,9 @@ def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fle
             if(j == NetworkDayChange[curNetwork]):
                 curNetwork += 1
                 fN = open(datadirpath + RoadNetworks[curNetwork] + ".json")
-                dataN = json.load(fN)
+                net_params = json.load(fN)
                 fN.close()
-                NL, Links = createNetwork(dataN)
+                NL, Links = createNetwork(net_params)
         except:
             raise(Exception("Network update failed"))
 
@@ -366,7 +378,7 @@ def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fle
     ######End of main loop over days
 
     ####Process data for output
-    convVector = np.ones(data["MovingAverageStep"]) / data["MovingAverageStep"]
+    convVector = np.ones(params_data["MovingAverageStep"]) / params_data["MovingAverageStep"]
 
 
     for r in range(NR):
@@ -411,27 +423,23 @@ def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fle
 
 ###############Main##################################
 #read config, network(N) and experiment (E) data from files
-f = open(datadirpath + inputFileName + '.json')
-fE = open(datadirpath + 'EData.json')
-data = json.load(f)
-dataE = json.load(fE)
-f.close()
-fE.close()
+params_data = params[kc.PARAMS_DATA]
+dataE = params[kc.EDATA]
 
-RoadNetworks = data["RoadNetworks"]
-NetworkDayChange = data["NetworkDayChange"]
-fN = open(datadirpath + RoadNetworks[0] + ".json")
-dataN = json.load(fN)
-fN.close()
+RoadNetworks = params_data[kc.ROAD_NETWORKS]
+NetworkDayChange = params_data[kc.NETWORK_DAY_CHANGE]
 
-NL, Links = createNetwork(dataN)
+net_params = params[RoadNetworks[0]]
+
+NL, Links = createNetwork(net_params)
+
 for l in range(NL):
     print("Link " + str(l))
     Links[l].print()
 Routes = []
-NR = int(dataN["Routes"]["NumberOfRoutes"]) 
+NR = int(net_params[kc.ROUTES][kc.NUMBER_OF_ROUTES]) 
 for r in range(NR):
-    Routes.append(Route(Links, dataN["Routes"]["LinksMatrix"][r], dataN["RouteLabels"][r]))
+    Routes.append(Route(Links, net_params[kc.ROUTES][kc.LINKS_MATRIX][r], net_params[kc.ROUTE_LABELS][r]))
 
 ENAME = dataE["name"]
 EXaxis = dataE["Xaxis"]
@@ -449,7 +457,7 @@ except: pass
 
 shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
 shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
-for rn in range(len(RoadNetworks)): shutil.copyfile(data["RoadNetworks"][rn] + '.json', EDIRNAME + "/" + data["RoadNetworks"][rn] + '.json')
+for rn in range(len(RoadNetworks)): shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
 
 print("Experimental data loaded")
 print(str(EYaxis) + " used in experiments:" + str(EYval))

@@ -1,7 +1,14 @@
-class keychain:
+class Keychain:
 
     ########### File names ###########
     INPUT_FILE = "params.json"
+    CONFIG = "config"
+    EDATA = "EData"
+    NET2PLAIN = "Net2Plain"
+    NET3TWOEQUAL = "Net3twoEqual"
+    NETBRAESS = "NetBraess"
+    NETBRAESS = "NetBraess2"
+    PARAMS_DATA = "ParamsData"
 
 
     ############## EDATA ##############
@@ -63,3 +70,18 @@ class keychain:
     MOVING_AVERAGE_STEP = "MovingAverageStep"
     PLOT_CAVS = "PlotCAVs"
     PLOT_MEAN_HDV = "PlotMeanHDV"
+
+    ############## Config ############
+    WHICH_PATH = "whichPath"
+    PATH0 = "path0"
+    PATH1 = "path1"
+    PATH2 = "path2"
+    PATH3 = "path3"
+    PATH4 = "path4"
+    PATH5 = "path5"
+    PATH6 = "path6"
+    PATH7 = "path7"
+    PATH8 = "path8"
+    PATH9 = "path9"
+    PATH10 = "path10"
+    PATH11 = "path11"

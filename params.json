@@ -86,6 +86,23 @@
 
         "PlotCAVs": true,
         "PlotMeanHDV": true
+    },
+
+    "config":
+    {
+        "whichPath": "0",
+        "path0": "",
+        "path1": "./Experiments/COEX_Exp_1/",
+        "path2": "./Experiments/COEX_Exp_2/",
+        "path3": "./Experiments/COEX_Exp_3/",
+        "path4": "./Experiments/HDVonly1/",
+        "path5": "./Experiments/HDVonly2/",
+        "path6": "./Experiments/HDVonly3/",
+        "path7": "./Experiments/HDVonly4/",
+        "path8": "./Experiments/HDVonly5/",
+        "path9": "./Experiments/HDVonly6/",
+        "path10": "./Experiments/COEX_LOGIT_TYPE_MODELS/",
+        "path11": "./Experiments/COEX_TIME_DEP/"
     }
     
 
