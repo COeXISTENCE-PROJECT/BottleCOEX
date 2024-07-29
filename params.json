@@ -1,0 +1,93 @@
+{
+
+    "EData":
+    {
+        "name": "test",
+        "Xaxis": "CAVTarget",
+        "Yaxis": "Fleet_size",
+        "XaxisName": "T",
+        "YaxisName": "share",
+        "Xval": ["Selfish", "Malicious", "Disruptive", "Altruistic", "Social"],
+        "Yval": [0.01, 0.1, 0.2, 0.5, 0.8, 0.9, 0.99]
+        },
+
+    
+    "Net2Plain":
+    {
+        "Links":{"NumberOfLinks":2, "Capacities":[0.5, 0.8], "Powers": [2, 2], "t0links":[5.0, 15.0], "kappas":[5.0, 15.0]},
+        "Routes" : {"NumberOfRoutes":2, "LinksMatrix": [[1,0],[0,1]]},
+        "RouteLabels":["A","B"]
+        },
+    
+
+    "Net3twoEqual":{
+        
+        "Links":{"NumberOfLinks":3, "Capacities":[0.3, 0.3, 0.8], "Powers": [2,2,2], "t0links":[5.0, 5.0, 15.0], "kappas":[5.0, 5.0, 15.0]},
+        "Routes" : {"NumberOfRoutes":3, "LinksMatrix": [[1,0,0],[0,1,0],[0,0,1]]},
+        "RouteLabels":["A","B","C"]
+            
+    },
+
+    "NetBraess":
+    {
+        "Links":{"NumberOfLinks": 5, 
+            "Capacities": [0.025, 1.0, 1.0, 0.025, 1.0],  
+            "Powers": [1, 0, 0, 1, 0], 
+            "t0links": [0.0, 45.0, 45.0, 0.0, 0.0], 
+            "kappas": [1.0, 0.0, 0.0, 1.0, 0.0]
+        },
+        
+        "Routes" : {"NumberOfRoutes": 3, "LinksMatrix": [[1,2,0,0,0],[0,0,1,2,0],[1,0,0,3,2]]},
+        "RouteLabels":["A","B","C"]
+    },
+
+    "NetBraess2":
+    {
+        "Links":{"NumberOfLinks":5, 
+            "Capacities": [0.025, 1.0, 1.0, 0.025, 1.0],  
+            "Powers": [1, 0, 0, 1, 0], 
+            "t0links":[0.0, 45.0, 45.0, 0.0, 100.0], 
+            "kappas": [1.0, 0.0, 0.0, 1.0, 0.0]
+        },
+        
+        "Routes" : {"NumberOfRoutes": 3, "LinksMatrix": [[1,2,0,0,0],[0,0,1,2,0],[1,0,0,3,2]]},
+        "RouteLabels":["A","B","C"]
+    },
+
+
+    "ParamsData":
+    {
+        "totalVehicles" : 1.0,
+
+        "HDVs" : {"defaultAlphaZero":0.2, "defaultEpsilon":0.1},
+
+        "multiplier": 100,
+        "dayRange": 400,
+
+        "RoadNetworks": ["Net2Plain"],
+        "NetworkDayChange": [10000],
+
+        "defaultModelName": "GumbelEps",
+        "defaultLogitParam": 0.2,
+        "defaultInitialKnowledge": "FreeFlow",
+        "defaultInitialChoice": "Random",
+        "defaultOnlyExperience": true,
+
+        "defaultFleetSize": 0.0,
+        "defaultFleetIntroduction": 200,
+        "defaultFleetOptimizationOnset": 200,
+        "defaultFleetOptimizationEnd": 400,
+        "defaultLambdaCAV": 1.0,
+        "defaultLambdaHDV": 0.0,
+        "defaultCAVTarget": "Selfish",
+        "defaultFleetMode": ["1","0","0","1+0"],
+
+        "MovingAverageStep": 20,
+
+        "PlotCAVs": true,
+        "PlotMeanHDV": true
+    }
+    
+
+
+}
