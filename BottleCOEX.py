@@ -410,9 +410,10 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode 
 
 
 
-###############Main##################################
-#read config, network(N) and experiment (E) data from files
+
 if __name__ == "__main__":
+
+    ## Initialize parameters
     params_data = params[kc.PARAMS_DATA]
     experiment_data = params[kc.EDATA]
 
@@ -420,16 +421,6 @@ if __name__ == "__main__":
     NetworkDayChange = params_data[kc.NETWORK_DAY_CHANGE]
 
     net_params = params[RoadNetworks[0]]
-
-    NL, Links = createNetwork(net_params)
-
-    for l in range(NL):
-        print("Link " + str(l))
-        Links[l].print()
-    Routes = []
-    NR = int(net_params[kc.ROUTES][kc.NUMBER_OF_ROUTES]) 
-    for r in range(NR):
-        Routes.append(Route(Links, net_params[kc.ROUTES][kc.LINKS_MATRIX][r], net_params[kc.ROUTE_LABELS][r]))
 
     ENAME = experiment_data["name"]
     EXaxis = experiment_data["Xaxis"]
@@ -442,16 +433,31 @@ if __name__ == "__main__":
     EXaxisName = experiment_data["XaxisName"]
     EYaxisName = experiment_data["YaxisName"]
 
-    try: os.mkdir(EDIRNAME)
-    except: pass
+    ## Create the network
+    NL, Links = createNetwork(net_params)
 
-    #shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
+    for l in range(NL):
+        print("Link " + str(l))
+        Links[l].print()
+
+    ## Create the routes    
+    Routes = []
+    NR = int(net_params[kc.ROUTES][kc.NUMBER_OF_ROUTES]) 
+    for r in range(NR):
+        Routes.append(Route(Links, net_params[kc.ROUTES][kc.LINKS_MATRIX][r], net_params[kc.ROUTE_LABELS][r]))
+
+    ## Create the experiment directory
+    try:
+        os.mkdir(EDIRNAME)
+
+    except FileExistsError:
+        # If the directory exists, delete its contents
+        shutil.rmtree(EDIRNAME)
+        os.mkdir(EDIRNAME)
 
     output_file = EDIRNAME + "/" + "experiment_data" +'.json'
     with open(output_file, 'w') as json_file:
         json.dump(experiment_data, json_file, indent=4)
-
-    #shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
 
     output_file = EDIRNAME + "/" + "data_params" +'.json'
     with open(output_file, 'w') as json_file:
@@ -465,12 +471,11 @@ if __name__ == "__main__":
             json.dump(params[params_data[kc.ROAD_NETWORKS][rn]], json_file, indent=4)
         
         
-        #shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
-
     print("Experimental data loaded")
     print(str(EYaxis) + " used in experiments:" + str(EYval))
     print(str(EXaxis) + " used in experiments:" + str(EXval))
 
+    ## Main experiment loop
     for exind in range(EXvalN):
         for eyind in range(EYvalN):
 
@@ -481,10 +486,13 @@ if __name__ == "__main__":
 
             ToFiledf = TTdfs[["Day",] + ["Travel time on " + Routes[r].label for r in range(NR)] +
                                 ["Mean HDV travel time",] + ["Mean HDV Perceived travel time",] + ["Mean CAV travel time",]].copy()
+            
             ToFiledf2 = VCdfs[["Day",] + ["HDV count on " + Routes[r].label for r in range(NR)]
                                         + ["CAV count on " + Routes[r].label for r in range(NR)]].copy()
+            
             filepath = "./" + EDIRNAME + "/" + ENAME + str('_')+ str(EXval[exind]) + str('_') + str(EYval[eyind]) + '.csv'
             ToFiledf.merge(ToFiledf2, how='left', on='Day').to_csv(filepath)
+            
             print(EXaxisName + ": " + str(EXval[exind]) + " " + EYaxisName + ": " + str(EYval[eyind]) + " Done")    
 
 ####################
