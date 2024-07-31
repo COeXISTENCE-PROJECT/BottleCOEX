@@ -9,6 +9,7 @@ class Keychain:
     NETBRAESS = "NetBraess"
     NETBRAESS = "NetBraess2"
     PARAMS_DATA = "ParamsData"
+    HUMAN_PARAMS = "HumanParams"
 
 
     ############## EDATA ##############
@@ -85,3 +86,12 @@ class Keychain:
     PATH9 = "path9"
     PATH10 = "path10"
     PATH11 = "path11"
+
+    ############## Human params ############
+    ROUTE_RANDOM_VAR = "route_random_var"
+    DRIVER_RANDOM_VAR = "driver_random_var"
+    LEARNING = "learning"
+    LEARNING_RATE_DECAY = "learning_rate_decay"
+    EXPLORATION_RATE_DECAY = "exploration_rate_decay"
+
+

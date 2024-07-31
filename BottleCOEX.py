@@ -1,10 +1,14 @@
 import os
+import csv
 import json
+import time
 import copy
 import shutil
 import numpy as np
 import pandas as pd
 from numpy import random
+from matplotlib import pyplot as plt
+
 from keychain import Keychain as kc
 
 
@@ -16,6 +20,14 @@ data_params = params[kc.PARAMS_DATA]
 datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
 
 
+DEFAULT_ALPHA_ZERO = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO]
+DEFAULT_EPSILON_ZERO = data_params[kc.HDVS][kc.DEFAULT_EPSILON]
+DEFAULT_LOGIT_PARAM = data_params[kc.DEFAULT_LOGIT_PARAM]
+DEFAULT_INITIAL_KNOWLEDGE = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE]
+DEFAULT_INITIAL_CHOICE = data_params[kc.DEFAULT_INITIAL_CHOICE]
+DEFAULT_ONLY_EXPERIENCE = data_params[kc.DEFAULT_ONLY_EXPERIENCE]
+DEFAULT_MODEL_NAME = data_params[kc.DEFAULT_MODEL_NAME]
+DEFAULT_JRANGE = data_params[kc.DAY_RANGE]    
 DEFAULT_TOTALVEHICLES = (float(data_params[kc.TOTAL_VEHICLES]))
 
 mult = data_params[kc.MULTIPLIER]                                              
@@ -24,7 +36,10 @@ DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)
 
 DEFAULT_LAMBDA_CAV = float(data_params[kc.DEFAULT_LAMBDA_CAV])                              
 DEFAULT_LAMBDA_HDV = float(data_params[kc.DEFAULT_LAMBDA_HDV])                              
+DEFAULT_CAV_TARGET = (data_params[kc.DEFAULT_CAV_TARGET])                              
 DEFAULT_FLEET_SIZE = int(float(data_params[kc.DEFAULT_FLEET_SIZE]))
+DEFAULT_FLEET_INTRODUCTION = data_params[kc.DEFAULT_FLEET_INTRODUCTION]
+DEFAULT_FLEET_MODE = data_params[kc.DEFAULT_FLEET_MODE]
 
 
 ROUTE_RANDOM_VAR = 0.0

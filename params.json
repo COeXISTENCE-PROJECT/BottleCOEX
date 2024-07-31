@@ -103,8 +103,15 @@
         "path9": "./Experiments/HDVonly6/",
         "path10": "./Experiments/COEX_LOGIT_TYPE_MODELS/",
         "path11": "./Experiments/COEX_TIME_DEP/"
+    },
+
+    "HumanParams":
+    {
+        "route_random_var": 0.0,
+        "driver_random_var": 0.0,
+        "learning": true,
+        "learning_rate_decay": 0.1,
+        "exploration_rate_decay": 0.1
     }
     
-
-
 }
