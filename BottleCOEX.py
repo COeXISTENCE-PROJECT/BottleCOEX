@@ -25,14 +25,6 @@ mult = data_params[kc.MULTIPLIER]
 DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)                                                 
 
 
-
-ROUTE_RANDOM_VAR = 0.0
-DRIVER_RANDOM_VAR = 0.0
-LEARNING = True
-LEARNING_RATE_DECAY = 1.0
-EXPLORATION_RATE_DECAY = 1.0
-
-
 #############Classes definitions (Link, Route, HumanAgent, Mode, FleetOperatorAgent)####################
 class Link:
 
@@ -64,7 +56,7 @@ class Route:
         
 class HumanAgent:
 
-    def __init__(self, jrange, model_name, learning_rate, learning_rate_decay, exploration_rate, exploration_rate_decay,
+    def __init__(self, human_params, jrange, model_name, learning_rate, learning_rate_decay, exploration_rate, exploration_rate_decay,
                  Qinit, Qinitchoice, logit_par, only_experience, NR):
         self.NR = NR
         self.lr = learning_rate
@@ -81,7 +73,8 @@ class HumanAgent:
         else: raise Exception("Initial choice not specified")
         self.minRoute = 0
         self.learning_ctr = 0
-        self.learns = LEARNING
+        self.human_params = human_params
+        self.learns = self.human_params[kc.LEARNING]
         self.learn_from_experience = only_experience
         self.logit_par = logit_par
         gumbelScale = 1/self.logit_par  
@@ -97,7 +90,7 @@ class HumanAgent:
         if(self.learns):
             if(self.learn_from_experience):
                 self.Q[self.curRoute] = (1-self.lr) * self.Q[self.curRoute] + (self.lr*(t_routes[self.curRoute]
-                                                                                     + random.normal(loc=0.0, scale=DRIVER_RANDOM_VAR)))
+                                                                                     + random.normal(loc=0.0, scale=self.human_params[kc.DRIVER_RANDOM_VAR])))
             else:
                 self.Q[:] = (1-self.lr)*self.Q[:] + self.lr*(t_routes[:]) 
             if self.Q[self.curRoute] < self.Q[self.minRoute]:
@@ -230,7 +223,7 @@ def createNetwork(net_params):
 
 
 #####The main Simulator, computes one scenario with with fixed parameters#####
-def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode = data_params[kc.DEFAULT_FLEET_MODE], 
+def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_params, Fleet_Mode = data_params[kc.DEFAULT_FLEET_MODE], 
               Model_Name = data_params[kc.DEFAULT_MODEL_NAME], Alpha_Zero = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO],
               Epsilon_Zero =  data_params[kc.HDVS][kc.DEFAULT_EPSILON], Logit_Exp_Coeff = data_params[kc.DEFAULT_LOGIT_PARAM],
               Initial_Knowledge = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE], Initial_Choice = data_params[kc.DEFAULT_INITIAL_CHOICE], 
@@ -253,8 +246,8 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode 
             elif(INITIAL == 'Pessimistic'): Qinit[r] = 25.0
             elif(INITIAL == 'Optimistic'):  Qinit[r] = 0.0
 
-        HDV.append(HumanAgent(jrange, Model_Name, Alpha_Zero, LEARNING_RATE_DECAY, Epsilon_Zero,
-                              EXPLORATION_RATE_DECAY, Qinit, INITIALCHOICE, Logit_Exp_Coeff, Only_Experience, NR))
+        HDV.append(HumanAgent(human_params, jrange, Model_Name, Alpha_Zero, human_params[kc.LEARNING_RATE_DECAY], Epsilon_Zero,
+                              human_params[kc.EXPLORATION_RATE_DECAY], Qinit, INITIALCHOICE, Logit_Exp_Coeff, Only_Experience, NR))
         
     ####Create fleet agent
     if(CAVTarget == 'Selfish'): LambdaHDV, LambdaCAV = 0.0, 1.0 
@@ -292,7 +285,7 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode 
         linksCounts = routesCounts2linksCounts(NR, Routes, NL, Links, (qcountsHDV[j, :] + qcountsCAV[j, :]))
         for r in range(NR):
             routeTimes[j, r] = Routes[r].travel_time(Links, linksCounts)
-            routeTimes[j, r] += random.normal(loc=0.0, scale=ROUTE_RANDOM_VAR)
+            routeTimes[j, r] += random.normal(loc=0.0, scale=human_params[kc.ROUTE_RANDOM_VAR])
 
         #Save statistics for day j
         noChangeRoutes[j] = noDriversChangingRoutes                                                  
@@ -402,6 +395,7 @@ if __name__ == "__main__":
     ## Initialize parameters
     params_data = params[kc.PARAMS_DATA]
     experiment_data = params[kc.EDATA]
+    human_params = params[kc.HUMAN_PARAMS]
 
     RoadNetworks = params_data[kc.ROAD_NETWORKS]
     NetworkDayChange = params_data[kc.NETWORK_DAY_CHANGE]
@@ -468,7 +462,7 @@ if __name__ == "__main__":
             d = {EXaxis: EXval[exind], EYaxis: EYval[eyind]}
             print(d)                
 
-            (TTdfs, VCdfs) = Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, **d)
+            (TTdfs, VCdfs) = Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_params, **d)
 
             ToFiledf = TTdfs[["Day",] + ["Travel time on " + Routes[r].label for r in range(NR)] +
                                 ["Mean HDV travel time",] + ["Mean HDV Perceived travel time",] + ["Mean CAV travel time",]].copy()
