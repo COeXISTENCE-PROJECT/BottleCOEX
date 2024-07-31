@@ -414,7 +414,7 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode 
 #read config, network(N) and experiment (E) data from files
 if __name__ == "__main__":
     params_data = params[kc.PARAMS_DATA]
-    dataE = params[kc.EDATA]
+    experiment_data = params[kc.EDATA]
 
     RoadNetworks = params_data[kc.ROAD_NETWORKS]
     NetworkDayChange = params_data[kc.NETWORK_DAY_CHANGE]
@@ -431,28 +431,41 @@ if __name__ == "__main__":
     for r in range(NR):
         Routes.append(Route(Links, net_params[kc.ROUTES][kc.LINKS_MATRIX][r], net_params[kc.ROUTE_LABELS][r]))
 
-    ENAME = dataE["name"]
-    EXaxis = dataE["Xaxis"]
-    EYaxis = dataE["Yaxis"]
+    ENAME = experiment_data["name"]
+    EXaxis = experiment_data["Xaxis"]
+    EYaxis = experiment_data["Yaxis"]
     EDIRNAME = (datadirpath + ENAME + EXaxis + EYaxis)
-    EXval = [(x) for x in(dataE["Xval"])]
-    EYval = [(x) for x in(dataE["Yval"])]
+    EXval = [(x) for x in(experiment_data["Xval"])]
+    EYval = [(x) for x in(experiment_data["Yval"])]
     EXvalN = len(EXval)
     EYvalN = len(EYval) 
-    EXaxisName = dataE["XaxisName"]
-    EYaxisName = dataE["YaxisName"]
+    EXaxisName = experiment_data["XaxisName"]
+    EYaxisName = experiment_data["YaxisName"]
 
     try: os.mkdir(EDIRNAME)
     except: pass
 
-    shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
+    #shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
+
+    output_file = EDIRNAME + "/" + "experiment_data" +'.json'
+    with open(output_file, 'w') as json_file:
+        json.dump(experiment_data, json_file, indent=4)
+
     #shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
 
     output_file = EDIRNAME + "/" + "data_params" +'.json'
     with open(output_file, 'w') as json_file:
         json.dump(data_params, json_file, indent=4)
 
-    for rn in range(len(RoadNetworks)): shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
+    
+    for rn in range(len(RoadNetworks)): 
+        output_file = EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json'
+
+        with open(output_file, 'w') as json_file:
+            json.dump(params[params_data[kc.ROAD_NETWORKS][rn]], json_file, indent=4)
+        
+        
+        #shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
 
     print("Experimental data loaded")
     print(str(EYaxis) + " used in experiments:" + str(EYval))
