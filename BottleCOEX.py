@@ -18,28 +18,12 @@ params = json.load(params)
 config_params = params[kc.CONFIG]
 data_params = params[kc.PARAMS_DATA]
 datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
-
-
-DEFAULT_ALPHA_ZERO = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO]
-DEFAULT_EPSILON_ZERO = data_params[kc.HDVS][kc.DEFAULT_EPSILON]
-DEFAULT_LOGIT_PARAM = data_params[kc.DEFAULT_LOGIT_PARAM]
-DEFAULT_INITIAL_KNOWLEDGE = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE]
-DEFAULT_INITIAL_CHOICE = data_params[kc.DEFAULT_INITIAL_CHOICE]
-DEFAULT_ONLY_EXPERIENCE = data_params[kc.DEFAULT_ONLY_EXPERIENCE]
-DEFAULT_MODEL_NAME = data_params[kc.DEFAULT_MODEL_NAME]
-DEFAULT_JRANGE = data_params[kc.DAY_RANGE]    
+  
 DEFAULT_TOTALVEHICLES = (float(data_params[kc.TOTAL_VEHICLES]))
 
 mult = data_params[kc.MULTIPLIER]                                              
 DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)                                                 
 
-
-DEFAULT_LAMBDA_CAV = float(data_params[kc.DEFAULT_LAMBDA_CAV])                              
-DEFAULT_LAMBDA_HDV = float(data_params[kc.DEFAULT_LAMBDA_HDV])                              
-DEFAULT_CAV_TARGET = (data_params[kc.DEFAULT_CAV_TARGET])                              
-DEFAULT_FLEET_SIZE = int(float(data_params[kc.DEFAULT_FLEET_SIZE]))
-DEFAULT_FLEET_INTRODUCTION = data_params[kc.DEFAULT_FLEET_INTRODUCTION]
-DEFAULT_FLEET_MODE = data_params[kc.DEFAULT_FLEET_MODE]
 
 
 ROUTE_RANDOM_VAR = 0.0
@@ -252,7 +236,7 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode 
               Initial_Knowledge = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE], Initial_Choice = data_params[kc.DEFAULT_INITIAL_CHOICE], 
               Only_Experience = data_params[kc.DEFAULT_ONLY_EXPERIENCE], Fleet_size = int(float(data_params[kc.DEFAULT_FLEET_SIZE])),
               Fleet_introduction = data_params[kc.DEFAULT_FLEET_INTRODUCTION], LambdaHDV = float(data_params[kc.DEFAULT_LAMBDA_HDV]), 
-              LambdaCAV = float(data_params[kc.DEFAULT_LAMBDA_CAV]), CAVTarget = float(data_params[kc.DEFAULT_LAMBDA_HDV]), 
+              LambdaCAV = float(data_params[kc.DEFAULT_LAMBDA_CAV]), CAVTarget = (data_params[kc.DEFAULT_CAV_TARGET]), 
               jrange = data_params[kc.DAY_RANGE], totalND = int(float(data_params[kc.TOTAL_VEHICLES]))):
 
     #####Normalize variables by mult
