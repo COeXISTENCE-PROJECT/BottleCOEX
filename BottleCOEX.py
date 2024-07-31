@@ -12,6 +12,7 @@ from matplotlib import pyplot as plt
 from keychain import Keychain as kc
 from route import Route
 from mode import Mode
+from utils import BPR, eps_greedy, routesCounts2linksCounts
 
 
 params = open(kc.INPUT_FILE)
@@ -42,8 +43,6 @@ class Link:
     def travel_time(self, count):
         return BPR(self.t0, self.kappa, self.cap, self.power, count)
 
-
-        
 class HumanAgent:
 
     def __init__(self, human_params, jrange, model_name, learning_rate, learning_rate_decay, exploration_rate, exploration_rate_decay,
@@ -179,7 +178,7 @@ class FleetOperatorAgent:
 
 ############Global Functions##################
 
-def routesCounts2linksCounts(NR, Routes, NL, Links, counts_on_routes):
+"""def routesCounts2linksCounts(NR, Routes, NL, Links, counts_on_routes):
     counts_on_links = np.zeros(NL)
     
     for r in range(NR):
@@ -189,11 +188,12 @@ def routesCounts2linksCounts(NR, Routes, NL, Links, counts_on_routes):
     return counts_on_links
 
 def eps_greedy(epsg, randVal, randRange, defbest):
+    print("randRange: ", randRange)
     if randVal < epsg: return random.randint(randRange)
     else: return defbest
 
 def BPR(t0, kappa, cap, power, count):
-    return t0 + kappa * (((count) / cap) ** power)
+    return t0 + kappa * (((count) / cap) ** power)"""
     
 def createNetwork(net_params):
     LinksNew = []
