@@ -8,15 +8,12 @@ import numpy as np
 import pandas as pd
 from numpy import random
 from matplotlib import pyplot as plt
+from tqdm import tqdm
 
-from fleet_operator_agent import FleetOperatorAgent
 from keychain import Keychain as kc
-from route import Route
-from utils import routesCounts2linksCounts
-from create_network import createNetwork
-from human_agent import HumanAgent
-from simulator import Simulator
-
+from utilities import Route
+from utilities import createNetwork
+from utilities import Simulator
 
 
 if __name__ == "__main__":
@@ -90,11 +87,10 @@ if __name__ == "__main__":
     print(str(EXaxis) + " used in experiments:" + str(EXval))
 
     ## Main experiment loop
-    for exind in range(EXvalN):
-        for eyind in range(EYvalN):
+    for exind in tqdm(range(EXvalN), desc=EXaxis):
+        for eyind in tqdm(range(EYvalN), desc=EYaxis):
 
             d = {EXaxis: EXval[exind], EYaxis: EYval[eyind]}
-            print(d)                
 
             (TTdfs, VCdfs) = Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_params, params_data, **d)
 
@@ -107,7 +103,7 @@ if __name__ == "__main__":
             filepath = "./" + EDIRNAME + "/" + ENAME + str('_')+ str(EXval[exind]) + str('_') + str(EYval[eyind]) + '.csv'
             ToFiledf.merge(ToFiledf2, how='left', on='Day').to_csv(filepath)
             
-            print(EXaxisName + ": " + str(EXval[exind]) + " " + EYaxisName + ": " + str(EYval[eyind]) + " Done")    
+            #print(EXaxisName + ": " + str(EXval[exind]) + " " + EYaxisName + ": " + str(EYval[eyind]) + " Done")    
 
 ####################
 

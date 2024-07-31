@@ -44,7 +44,10 @@ dfarray = {}
 for exind in range(EXvalN):
     for eyind in range(EYvalN):
         filepath = dirpath + EFILENAME + str('_')+ str(EXval[exind]) + str('_') + str(EYval[eyind]) + '.csv'
-        dfarray[exind, eyind] = pd.read_csv(filepath)
+        try:
+            dfarray[exind, eyind] = pd.read_csv(filepath)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Please run BottleCOEX.py before running this script. File {filepath} not found.")
 
 
 jrange = data_params[kc.DAY_RANGE]

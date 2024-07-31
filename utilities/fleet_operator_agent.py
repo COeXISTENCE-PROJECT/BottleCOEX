@@ -1,6 +1,6 @@
 import numpy as np
-from mode import Mode
-from utils import routesCounts2linksCounts
+from .mode import Mode
+from .utils import routesCounts2linksCounts
 
 class FleetOperatorAgent:
 

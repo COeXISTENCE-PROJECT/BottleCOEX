@@ -1,6 +1,6 @@
 import json
 from keychain import Keychain as kc
-from link import Link
+from .link import Link
 
 params = open(kc.INPUT_FILE)
 params = json.load(params)

@@ -1,4 +1,4 @@
-from utils import BPR
+from .utils import BPR
 
 class Link:
 

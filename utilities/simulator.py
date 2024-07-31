@@ -5,11 +5,11 @@ from numpy import random
 import pandas as pd
 import random
 
-from create_network import createNetwork
-from human_agent import HumanAgent
+from .create_network import createNetwork
+from .human_agent import HumanAgent
 from keychain import Keychain as kc
-from fleet_operator_agent import FleetOperatorAgent
-from utils import routesCounts2linksCounts
+from .fleet_operator_agent import FleetOperatorAgent
+from .utils import routesCounts2linksCounts
 
 
 

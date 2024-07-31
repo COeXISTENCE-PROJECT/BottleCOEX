@@ -1,7 +1,7 @@
 from keychain import Keychain as kc
 import numpy as np
 import random
-from utils import eps_greedy
+from .utils import eps_greedy
 
 class HumanAgent:
 
