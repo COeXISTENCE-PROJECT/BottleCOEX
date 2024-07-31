@@ -20,37 +20,26 @@ data_params = params[kc.PARAMS_DATA]
 datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
 
 
-"""fC = open("Config.json")
-dataC = json.load(fC)
-fC.close()
-datadirpath =  dataC[("path" + dataC["whichPath"])]
-print("\n\ndatadirpath is: ", datadirpath, "\n\n\n")"""
+DEFAULT_ALPHA_ZERO = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO]
+DEFAULT_EPSILON_ZERO = data_params[kc.HDVS][kc.DEFAULT_EPSILON]
+DEFAULT_LOGIT_PARAM = data_params[kc.DEFAULT_LOGIT_PARAM]
+DEFAULT_INITIAL_KNOWLEDGE = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE]
+DEFAULT_INITIAL_CHOICE = data_params[kc.DEFAULT_INITIAL_CHOICE]
+DEFAULT_ONLY_EXPERIENCE = data_params[kc.DEFAULT_ONLY_EXPERIENCE]
+DEFAULT_MODEL_NAME = data_params[kc.DEFAULT_MODEL_NAME]
+DEFAULT_JRANGE = data_params[kc.DAY_RANGE]    
+DEFAULT_TOTALVEHICLES = (float(data_params[kc.TOTAL_VEHICLES]))
 
-inputFileName = 'paramsData'
-f = open(datadirpath + inputFileName + '.json')
-paramsData = json.load(f)
-f.close()
-
-DEFAULT_ALPHA_ZERO = paramsData[kc.HDVS][kc.DEFAULT_ALPHA_ZERO]
-DEFAULT_EPSILON_ZERO = paramsData[kc.HDVS][kc.DEFAULT_EPSILON]
-DEFAULT_LOGIT_PARAM = paramsData[kc.DEFAULT_LOGIT_PARAM]
-DEFAULT_INITIAL_KNOWLEDGE = paramsData[kc.DEFAULT_INITIAL_KNOWLEDGE]
-DEFAULT_INITIAL_CHOICE = paramsData[kc.DEFAULT_INITIAL_CHOICE]
-DEFAULT_ONLY_EXPERIENCE = paramsData[kc.DEFAULT_ONLY_EXPERIENCE]
-DEFAULT_MODEL_NAME = paramsData[kc.DEFAULT_MODEL_NAME]
-DEFAULT_JRANGE = paramsData[kc.DAY_RANGE]    
-DEFAULT_TOTALVEHICLES = (float(paramsData[kc.TOTAL_VEHICLES]))
-
-mult = paramsData[kc.MULTIPLIER]                                              
+mult = data_params[kc.MULTIPLIER]                                              
 DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)                                                 
 
 
-DEFAULT_LAMBDA_CAV = float(paramsData[kc.DEFAULT_LAMBDA_CAV])                              
-DEFAULT_LAMBDA_HDV = float(paramsData[kc.DEFAULT_LAMBDA_HDV])                              
-DEFAULT_CAV_TARGET = (paramsData[kc.DEFAULT_CAV_TARGET])                              
-DEFAULT_FLEET_SIZE = int(float(paramsData[kc.DEFAULT_FLEET_SIZE]))
-DEFAULT_FLEET_INTRODUCTION = paramsData[kc.DEFAULT_FLEET_INTRODUCTION]
-DEFAULT_FLEET_MODE = paramsData[kc.DEFAULT_FLEET_MODE]
+DEFAULT_LAMBDA_CAV = float(data_params[kc.DEFAULT_LAMBDA_CAV])                              
+DEFAULT_LAMBDA_HDV = float(data_params[kc.DEFAULT_LAMBDA_HDV])                              
+DEFAULT_CAV_TARGET = (data_params[kc.DEFAULT_CAV_TARGET])                              
+DEFAULT_FLEET_SIZE = int(float(data_params[kc.DEFAULT_FLEET_SIZE]))
+DEFAULT_FLEET_INTRODUCTION = data_params[kc.DEFAULT_FLEET_INTRODUCTION]
+DEFAULT_FLEET_MODE = data_params[kc.DEFAULT_FLEET_MODE]
 
 
 ROUTE_RANDOM_VAR = 0.0
@@ -457,7 +446,12 @@ if __name__ == "__main__":
     except: pass
 
     shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
-    shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
+    #shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
+
+    output_file = EDIRNAME + "/" + "data_params" +'.json'
+    with open(output_file, 'w') as json_file:
+        json.dump(data_params, json_file, indent=4)
+
     for rn in range(len(RoadNetworks)): shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
 
     print("Experimental data loaded")
@@ -466,9 +460,12 @@ if __name__ == "__main__":
 
     for exind in range(EXvalN):
         for eyind in range(EYvalN):
+
             d = {EXaxis: EXval[exind], EYaxis: EYval[eyind]}
             print(d)                
+
             (TTdfs, VCdfs) = Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, **d)
+
             ToFiledf = TTdfs[["Day",] + ["Travel time on " + Routes[r].label for r in range(NR)] +
                                 ["Mean HDV travel time",] + ["Mean HDV Perceived travel time",] + ["Mean CAV travel time",]].copy()
             ToFiledf2 = VCdfs[["Day",] + ["HDV count on " + Routes[r].label for r in range(NR)]

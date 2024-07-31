@@ -2,6 +2,12 @@ import numpy as np
 import pandas as pd
 import json
 from matplotlib import pyplot as plt
+from keychain import Keychain as kc
+
+
+params = open(kc.INPUT_FILE)
+params = json.load(params)
+
 
 fC = open("Config.json")
 dataC = json.load(fC)
@@ -11,9 +17,16 @@ datadirpath =  dataC[("path" + dataC["whichPath"])]
 fE = open(datadirpath + 'EData.json')
 dataE = json.load(fE)
 fE.close()
-f = open(datadirpath + 'paramsData.json')
+
+
+"""f = open(datadirpath + 'paramsData.json')
 data = json.load(f)
-f.close()
+f.close()"""
+data_params = params[kc.PARAMS_DATA]
+data = data_params
+
+
+
 fN = open(datadirpath + data["RoadNetworks"][0] + ".json")
 dataN = json.load(fN)
 fN.close()
