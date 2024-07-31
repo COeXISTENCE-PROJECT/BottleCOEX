@@ -246,12 +246,14 @@ def createNetwork(net_params):
 
 
 #####The main Simulator, computes one scenario with with fixed parameters#####
-def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode = DEFAULT_FLEET_MODE, Model_Name = DEFAULT_MODEL_NAME,
-              Alpha_Zero = DEFAULT_ALPHA_ZERO, Epsilon_Zero = DEFAULT_EPSILON_ZERO, Logit_Exp_Coeff = DEFAULT_LOGIT_PARAM,
-              Initial_Knowledge = DEFAULT_INITIAL_KNOWLEDGE, Initial_Choice = DEFAULT_INITIAL_CHOICE, Only_Experience = DEFAULT_ONLY_EXPERIENCE,
-              Fleet_size = DEFAULT_FLEET_SIZE, Fleet_introduction = DEFAULT_FLEET_INTRODUCTION,
-              LambdaHDV = DEFAULT_LAMBDA_HDV, LambdaCAV = DEFAULT_LAMBDA_CAV, CAVTarget = DEFAULT_CAV_TARGET, jrange = DEFAULT_JRANGE,
-              totalND = DEFAULT_TOTALND):
+def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode = data_params[kc.DEFAULT_FLEET_MODE], 
+              Model_Name = data_params[kc.DEFAULT_MODEL_NAME], Alpha_Zero = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO],
+              Epsilon_Zero =  data_params[kc.HDVS][kc.DEFAULT_EPSILON], Logit_Exp_Coeff = data_params[kc.DEFAULT_LOGIT_PARAM],
+              Initial_Knowledge = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE], Initial_Choice = data_params[kc.DEFAULT_INITIAL_CHOICE], 
+              Only_Experience = data_params[kc.DEFAULT_ONLY_EXPERIENCE], Fleet_size = int(float(data_params[kc.DEFAULT_FLEET_SIZE])),
+              Fleet_introduction = data_params[kc.DEFAULT_FLEET_INTRODUCTION], LambdaHDV = float(data_params[kc.DEFAULT_LAMBDA_HDV]), 
+              LambdaCAV = float(data_params[kc.DEFAULT_LAMBDA_CAV]), CAVTarget = float(data_params[kc.DEFAULT_LAMBDA_HDV]), 
+              jrange = data_params[kc.DAY_RANGE], totalND = int(float(data_params[kc.TOTAL_VEHICLES]))):
 
     #####Normalize variables by mult
     totalND = int(mult*(totalND))
