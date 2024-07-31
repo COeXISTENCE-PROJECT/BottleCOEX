@@ -8,48 +8,37 @@ from keychain import Keychain as kc
 params = open(kc.INPUT_FILE)
 params = json.load(params)
 
-
-fC = open("Config.json")
-dataC = json.load(fC)
-fC.close()
-datadirpath =  dataC[("path" + dataC["whichPath"])]
-
-fE = open(datadirpath + 'EData.json')
-dataE = json.load(fE)
-fE.close()
-
-
-"""f = open(datadirpath + 'paramsData.json')
-data = json.load(f)
-f.close()"""
+config_params = params[kc.CONFIG]
 data_params = params[kc.PARAMS_DATA]
-data = data_params
+experiment_params = params[kc.EDATA]
+datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
 
+data_params = params[kc.PARAMS_DATA]
 
+RoadNetworks = data_params[kc.ROAD_NETWORKS]
+NetworkDayChange = data_params[kc.NETWORK_DAY_CHANGE]
 
-fN = open(datadirpath + data["RoadNetworks"][0] + ".json")
-dataN = json.load(fN)
-fN.close()
+net_params = params[RoadNetworks[0]]
 
-EDIRNAME = dataE["name"] + dataE["Xaxis"] + dataE["Yaxis"]
+EDIRNAME = experiment_params[kc.NAME] + experiment_params[kc.Xaxis] + experiment_params[kc.Yaxis]
 dirpath = datadirpath + "./" + EDIRNAME + "/"
 
-NR = int(dataN["Routes"]["NumberOfRoutes"])
-RouteLabels = dataN["RouteLabels"]
+NR = int(net_params[kc.ROUTES][kc.NUMBER_OF_ROUTES])
+RouteLabels = net_params[kc.ROUTE_LABELS]
 
-EFILENAME = dataE["name"]
-EXaxis = dataE["Xaxis"]
-EYaxis = dataE["Yaxis"]
-EYval = [(x) for x in(dataE["Yval"])]
-EXval = [(x) for x in(dataE["Xval"])]
+EFILENAME = experiment_params[kc.NAME]
+EXaxis = experiment_params[kc.Xaxis]
+EYaxis = experiment_params[kc.Yaxis]
+EYval = [(x) for x in(experiment_params[kc.Yval])]
+EXval = [(x) for x in(experiment_params[kc.Xval])]
 EYvalN = len(EYval)
 EXvalN = len(EXval)
-EXaxisName = dataE["XaxisName"]
-EYaxisName = dataE["YaxisName"]
-plotCAVs = data["PlotCAVs"]
-plotMeanHDV = data["PlotMeanHDV"] 
+EXaxisName = experiment_params[kc.XaxisName]
+EYaxisName = experiment_params[kc.YaxisName]
+plotCAVs = data_params[kc.PLOT_CAVS]
+plotMeanHDV = data_params[kc.PLOT_MEAN_HDV] 
 
-fleetIntro = data["defaultFleetIntroduction"]
+fleetIntro = data_params[kc.DEFAULT_FLEET_INTRODUCTION]
 print("Experimental data loaded")
 dfarray = {}
 for exind in range(EXvalN):
@@ -58,7 +47,7 @@ for exind in range(EXvalN):
         dfarray[exind, eyind] = pd.read_csv(filepath)
 
 
-jrange = data["dayRange"]
+jrange = data_params[kc.DAY_RANGE]
 Labels_counts = ["HDV count on A", "HDV count on B", "CAV count on A", "CAV count on B"]
 Labels_countsTT = ["Travel time on A", "Travel time on B", "Mean HDV travel time", "Mean CAV travel time"]
             
@@ -94,7 +83,7 @@ for exind in range(EXvalN):
             ax.plot(dfarray[exind, eyind]["Travel time on " + RouteLabels[r]])
         if(plotMeanHDV): ax.plot(dfarray[exind, eyind]["Mean HDV travel time"])
         if(plotCAVs):
-            ax.plot(dfarray[exind, eyind]["Mean CAV travel time"][data["defaultFleetIntroduction"]:data["dayRange"]])
+            ax.plot(dfarray[exind, eyind]["Mean CAV travel time"][data_params["defaultFleetIntroduction"]:data_params["dayRange"]])
             ax.axvline(x=200, ymin=0, ymax = 0.8, color = 'black', linestyle = 'dashed', linewidth = 0.5)
 
     
@@ -127,7 +116,7 @@ for exind in range(EXvalN):
             ax.plot(dfarray[exind, eyind]["HDV count on " + RouteLabels[r]])
         if(plotCAVs):
             for r in range(NR):
-                ax.plot(dfarray[exind, eyind]["CAV count on " + RouteLabels[r]][data["defaultFleetIntroduction"]:data["dayRange"]])
+                ax.plot(dfarray[exind, eyind]["CAV count on " + RouteLabels[r]][data_params[kc. DEFAULT_FLEET_INTRODUCTION]:data_params[kc.DAY_RANGE]])
             ax.axvline(x=200, ymin=0, ymax = 0.8, color = 'black', linestyle = 'dashed', linewidth = 0.5)
         ax.text(0.1, 0.95, EXaxisName + " = " + str(EXval[exind]) + ", " + EYaxisName + " = " + str(EYval[eyind]),
                 transform=ax.transAxes, fontsize=8, fontweight='bold', va='top')
