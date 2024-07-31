@@ -20,12 +20,7 @@ config_params = params[kc.CONFIG]
 data_params = params[kc.PARAMS_DATA]
 datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
   
-DEFAULT_TOTALVEHICLES = (float(data_params[kc.TOTAL_VEHICLES]))
 
-mult = data_params[kc.MULTIPLIER]                                              
-DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)                                                 
-
-#####The main Simulator, computes one scenario with with fixed parameters#####
 def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_params, params_data, Fleet_Mode = data_params[kc.DEFAULT_FLEET_MODE], 
               Model_Name = data_params[kc.DEFAULT_MODEL_NAME], Alpha_Zero = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO],
               Epsilon_Zero =  data_params[kc.HDVS][kc.DEFAULT_EPSILON], Logit_Exp_Coeff = data_params[kc.DEFAULT_LOGIT_PARAM],
@@ -34,6 +29,8 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_param
               Fleet_introduction = data_params[kc.DEFAULT_FLEET_INTRODUCTION], LambdaHDV = float(data_params[kc.DEFAULT_LAMBDA_HDV]), 
               LambdaCAV = float(data_params[kc.DEFAULT_LAMBDA_CAV]), CAVTarget = (data_params[kc.DEFAULT_CAV_TARGET]), 
               jrange = data_params[kc.DAY_RANGE], totalND = int(float(data_params[kc.TOTAL_VEHICLES]))):
+    
+    mult = params_data[kc.MULTIPLIER]
 
     #####Normalize variables by mult
     totalND = int(mult*(totalND))
@@ -87,7 +84,7 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_param
         #Evaluate route times on day j
         linksCounts = routesCounts2linksCounts(NR, Routes, NL, Links, (qcountsHDV[j, :] + qcountsCAV[j, :]))
         for r in range(NR):
-            routeTimes[j, r] = Routes[r].travel_time(Links, linksCounts)
+            routeTimes[j, r] = Routes[r].calculate_travel_time(Links, linksCounts)
             routeTimes[j, r] += np.random.normal(loc=0.0, scale=human_params[kc.ROUTE_RANDOM_VAR])
 
         #Save statistics for day j

@@ -46,7 +46,7 @@ class FleetOperatorAgent:
             link_counts = routesCounts2linksCounts(self.NR, self.routes, self.NL, self.links, route_counts)
 
             for r in range(self.NR):
-                simulated_troutes[CAVonA][r] = self.routes[r].travel_time(self.links, link_counts)
+                simulated_troutes[CAVonA][r] = self.routes[r].calculate_travel_time(self.links, link_counts)
 
             FleetTravelTimes[CAVonA] = (np.dot(simulated_troutes[CAVonA][:], test_intercepts[:]))        
             HDVTravelTimes[CAVonA] = (np.dot(simulated_troutes[CAVonA][:], qcount[:]))
