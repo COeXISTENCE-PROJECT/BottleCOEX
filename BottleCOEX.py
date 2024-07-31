@@ -17,7 +17,7 @@ params = json.load(params)
 
 config_params = params[kc.CONFIG]
 data_params = params[kc.PARAMS_DATA]
-datadirpath = config_params["path" + config_params["whichPath"]]
+datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
 
 
 """fC = open("Config.json")
@@ -31,26 +31,26 @@ f = open(datadirpath + inputFileName + '.json')
 paramsData = json.load(f)
 f.close()
 
-DEFAULT_ALPHA_ZERO = paramsData["HDVs"]["defaultAlphaZero"]
-DEFAULT_EPSILON_ZERO = paramsData["HDVs"]["defaultEpsilon"]
-DEFAULT_LOGIT_PARAM = paramsData["defaultLogitParam"]
-DEFAULT_INITIAL_KNOWLEDGE = paramsData["defaultInitialKnowledge"]
-DEFAULT_INITIAL_CHOICE = paramsData["defaultInitialChoice"]
-DEFAULT_ONLY_EXPERIENCE = paramsData["defaultOnlyExperience"]
-DEFAULT_MODEL_NAME = paramsData["defaultModelName"]
-DEFAULT_JRANGE = paramsData["dayRange"]    
-DEFAULT_TOTALVEHICLES = (float(paramsData["totalVehicles"]))
+DEFAULT_ALPHA_ZERO = paramsData[kc.HDVS][kc.DEFAULT_ALPHA_ZERO]
+DEFAULT_EPSILON_ZERO = paramsData[kc.HDVS][kc.DEFAULT_EPSILON]
+DEFAULT_LOGIT_PARAM = paramsData[kc.DEFAULT_LOGIT_PARAM]
+DEFAULT_INITIAL_KNOWLEDGE = paramsData[kc.DEFAULT_INITIAL_KNOWLEDGE]
+DEFAULT_INITIAL_CHOICE = paramsData[kc.DEFAULT_INITIAL_CHOICE]
+DEFAULT_ONLY_EXPERIENCE = paramsData[kc.DEFAULT_ONLY_EXPERIENCE]
+DEFAULT_MODEL_NAME = paramsData[kc.DEFAULT_MODEL_NAME]
+DEFAULT_JRANGE = paramsData[kc.DAY_RANGE]    
+DEFAULT_TOTALVEHICLES = (float(paramsData[kc.TOTAL_VEHICLES]))
 
-mult = paramsData["multiplier"]                                              
+mult = paramsData[kc.MULTIPLIER]                                              
 DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)                                                 
 
 
-DEFAULT_LAMBDA_CAV = float(paramsData["defaultLambdaCAV"])                              
-DEFAULT_LAMBDA_HDV = float(paramsData["defaultLambdaHDV"])                              
-DEFAULT_CAV_TARGET = (paramsData["defaultCAVTarget"])                              
-DEFAULT_FLEET_SIZE = int(float(paramsData["defaultFleetSize"]))
-DEFAULT_FLEET_INTRODUCTION = paramsData["defaultFleetIntroduction"]
-DEFAULT_FLEET_MODE = paramsData["defaultFleetMode"]
+DEFAULT_LAMBDA_CAV = float(paramsData[kc.DEFAULT_LAMBDA_CAV])                              
+DEFAULT_LAMBDA_HDV = float(paramsData[kc.DEFAULT_LAMBDA_HDV])                              
+DEFAULT_CAV_TARGET = (paramsData[kc.DEFAULT_CAV_TARGET])                              
+DEFAULT_FLEET_SIZE = int(float(paramsData[kc.DEFAULT_FLEET_SIZE]))
+DEFAULT_FLEET_INTRODUCTION = paramsData[kc.DEFAULT_FLEET_INTRODUCTION]
+DEFAULT_FLEET_MODE = paramsData[kc.DEFAULT_FLEET_MODE]
 
 
 ROUTE_RANDOM_VAR = 0.0
