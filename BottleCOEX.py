@@ -1,14 +1,10 @@
 import os
-import csv
 import json
-import time
 import copy
 import shutil
 import numpy as np
 import pandas as pd
 from numpy import random
-from matplotlib import pyplot as plt
-
 from keychain import Keychain as kc
 
 
@@ -20,14 +16,6 @@ data_params = params[kc.PARAMS_DATA]
 datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
 
 
-DEFAULT_ALPHA_ZERO = data_params[kc.HDVS][kc.DEFAULT_ALPHA_ZERO]
-DEFAULT_EPSILON_ZERO = data_params[kc.HDVS][kc.DEFAULT_EPSILON]
-DEFAULT_LOGIT_PARAM = data_params[kc.DEFAULT_LOGIT_PARAM]
-DEFAULT_INITIAL_KNOWLEDGE = data_params[kc.DEFAULT_INITIAL_KNOWLEDGE]
-DEFAULT_INITIAL_CHOICE = data_params[kc.DEFAULT_INITIAL_CHOICE]
-DEFAULT_ONLY_EXPERIENCE = data_params[kc.DEFAULT_ONLY_EXPERIENCE]
-DEFAULT_MODEL_NAME = data_params[kc.DEFAULT_MODEL_NAME]
-DEFAULT_JRANGE = data_params[kc.DAY_RANGE]    
 DEFAULT_TOTALVEHICLES = (float(data_params[kc.TOTAL_VEHICLES]))
 
 mult = data_params[kc.MULTIPLIER]                                              
@@ -36,10 +24,7 @@ DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)
 
 DEFAULT_LAMBDA_CAV = float(data_params[kc.DEFAULT_LAMBDA_CAV])                              
 DEFAULT_LAMBDA_HDV = float(data_params[kc.DEFAULT_LAMBDA_HDV])                              
-DEFAULT_CAV_TARGET = (data_params[kc.DEFAULT_CAV_TARGET])                              
 DEFAULT_FLEET_SIZE = int(float(data_params[kc.DEFAULT_FLEET_SIZE]))
-DEFAULT_FLEET_INTRODUCTION = data_params[kc.DEFAULT_FLEET_INTRODUCTION]
-DEFAULT_FLEET_MODE = data_params[kc.DEFAULT_FLEET_MODE]
 
 
 ROUTE_RANDOM_VAR = 0.0
@@ -424,16 +409,16 @@ if __name__ == "__main__":
 
     net_params = params[RoadNetworks[0]]
 
-    ENAME = experiment_data["name"]
-    EXaxis = experiment_data["Xaxis"]
-    EYaxis = experiment_data["Yaxis"]
+    ENAME = experiment_data[kc.NAME]
+    EXaxis = experiment_data[kc.Xaxis]
+    EYaxis = experiment_data[kc.Yaxis]
     EDIRNAME = (datadirpath + ENAME + EXaxis + EYaxis)
-    EXval = [(x) for x in(experiment_data["Xval"])]
-    EYval = [(x) for x in(experiment_data["Yval"])]
+    EXval = [(x) for x in(experiment_data[kc.Xval])]
+    EYval = [(x) for x in(experiment_data[kc.Yval])]
     EXvalN = len(EXval)
     EYvalN = len(EYval) 
-    EXaxisName = experiment_data["XaxisName"]
-    EYaxisName = experiment_data["YaxisName"]
+    EXaxisName = experiment_data[kc.XaxisName]
+    EYaxisName = experiment_data[kc.YaxisName]
 
     ## Create the network
     NL, Links = createNetwork(net_params)
@@ -457,13 +442,13 @@ if __name__ == "__main__":
         shutil.rmtree(EDIRNAME)
         os.mkdir(EDIRNAME)
 
-    output_file = EDIRNAME + "/" + "experiment_data" +'.json'
+    output_file = EDIRNAME + "/" + kc.EDATA +'.json'
     with open(output_file, 'w') as json_file:
         json.dump(experiment_data, json_file, indent=4)
 
-    output_file = EDIRNAME + "/" + "data_params" +'.json'
+    output_file = EDIRNAME + "/" + kc.PARAMS_DATA +'.json'
     with open(output_file, 'w') as json_file:
-        json.dump(data_params, json_file, indent=4)
+        json.dump(params_data, json_file, indent=4)
 
     
     for rn in range(len(RoadNetworks)): 
