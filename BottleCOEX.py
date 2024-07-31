@@ -257,7 +257,7 @@ def createNetwork(net_params):
 
 
 #####The main Simulator, computes one scenario with with fixed parameters#####
-def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode = DEFAULT_FLEET_MODE, Model_Name = DEFAULT_MODEL_NAME,
+def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fleet_Mode = DEFAULT_FLEET_MODE, Model_Name = DEFAULT_MODEL_NAME,
               Alpha_Zero = DEFAULT_ALPHA_ZERO, Epsilon_Zero = DEFAULT_EPSILON_ZERO, Logit_Exp_Coeff = DEFAULT_LOGIT_PARAM,
               Initial_Knowledge = DEFAULT_INITIAL_KNOWLEDGE, Initial_Choice = DEFAULT_INITIAL_CHOICE, Only_Experience = DEFAULT_ONLY_EXPERIENCE,
               Fleet_size = DEFAULT_FLEET_SIZE, Fleet_introduction = DEFAULT_FLEET_INTRODUCTION,
@@ -423,53 +423,52 @@ def Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, Fle
 
 ###############Main##################################
 #read config, network(N) and experiment (E) data from files
-params_data = params[kc.PARAMS_DATA]
-dataE = params[kc.EDATA]
+if __name__ == "__main__":
+    params_data = params[kc.PARAMS_DATA]
+    dataE = params[kc.EDATA]
 
-RoadNetworks = params_data[kc.ROAD_NETWORKS]
-NetworkDayChange = params_data[kc.NETWORK_DAY_CHANGE]
+    RoadNetworks = params_data[kc.ROAD_NETWORKS]
+    NetworkDayChange = params_data[kc.NETWORK_DAY_CHANGE]
 
-net_params = params[RoadNetworks[0]]
+    net_params = params[RoadNetworks[0]]
 
-NL, Links = createNetwork(net_params)
+    NL, Links = createNetwork(net_params)
 
-for l in range(NL):
-    print("Link " + str(l))
-    Links[l].print()
-Routes = []
-NR = int(net_params[kc.ROUTES][kc.NUMBER_OF_ROUTES]) 
-for r in range(NR):
-    Routes.append(Route(Links, net_params[kc.ROUTES][kc.LINKS_MATRIX][r], net_params[kc.ROUTE_LABELS][r]))
+    for l in range(NL):
+        print("Link " + str(l))
+        Links[l].print()
+    Routes = []
+    NR = int(net_params[kc.ROUTES][kc.NUMBER_OF_ROUTES]) 
+    for r in range(NR):
+        Routes.append(Route(Links, net_params[kc.ROUTES][kc.LINKS_MATRIX][r], net_params[kc.ROUTE_LABELS][r]))
 
-ENAME = dataE["name"]
-EXaxis = dataE["Xaxis"]
-EYaxis = dataE["Yaxis"]
-EDIRNAME = (datadirpath + ENAME + EXaxis + EYaxis)
-EXval = [(x) for x in(dataE["Xval"])]
-EYval = [(x) for x in(dataE["Yval"])]
-EXvalN = len(EXval)
-EYvalN = len(EYval) 
-EXaxisName = dataE["XaxisName"]
-EYaxisName = dataE["YaxisName"]
+    ENAME = dataE["name"]
+    EXaxis = dataE["Xaxis"]
+    EYaxis = dataE["Yaxis"]
+    EDIRNAME = (datadirpath + ENAME + EXaxis + EYaxis)
+    EXval = [(x) for x in(dataE["Xval"])]
+    EYval = [(x) for x in(dataE["Yval"])]
+    EXvalN = len(EXval)
+    EYvalN = len(EYval) 
+    EXaxisName = dataE["XaxisName"]
+    EYaxisName = dataE["YaxisName"]
 
-try: os.mkdir(EDIRNAME)
-except: pass
+    try: os.mkdir(EDIRNAME)
+    except: pass
 
-shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
-shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
-for rn in range(len(RoadNetworks)): shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
+    shutil.copyfile('EData.json', EDIRNAME + "/" + 'EData.json')
+    shutil.copyfile(inputFileName + '.json', EDIRNAME + "/" + inputFileName+'.json')
+    for rn in range(len(RoadNetworks)): shutil.copyfile(params_data[kc.ROAD_NETWORKS][rn] + '.json', EDIRNAME + "/" + params_data[kc.ROAD_NETWORKS][rn] + '.json')
 
-print("Experimental data loaded")
-print(str(EYaxis) + " used in experiments:" + str(EYval))
-print(str(EXaxis) + " used in experiments:" + str(EXval))
-
-def One_Sample(sample):
+    print("Experimental data loaded")
+    print(str(EYaxis) + " used in experiments:" + str(EYval))
+    print(str(EXaxis) + " used in experiments:" + str(EXval))
 
     for exind in range(EXvalN):
         for eyind in range(EYvalN):
             d = {EXaxis: EXval[exind], EYaxis: EYval[eyind]}
             print(d)                
-            (TTdfs, VCdfs) = Simulator(sample, RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, **d)
+            (TTdfs, VCdfs) = Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, **d)
             ToFiledf = TTdfs[["Day",] + ["Travel time on " + Routes[r].label for r in range(NR)] +
                                 ["Mean HDV travel time",] + ["Mean HDV Perceived travel time",] + ["Mean CAV travel time",]].copy()
             ToFiledf2 = VCdfs[["Day",] + ["HDV count on " + Routes[r].label for r in range(NR)]
@@ -478,6 +477,5 @@ def One_Sample(sample):
             ToFiledf.merge(ToFiledf2, how='left', on='Day').to_csv(filepath)
             print(EXaxisName + ": " + str(EXval[exind]) + " " + EYaxisName + ": " + str(EYval[eyind]) + " Done")    
 
-One_Sample(0)
 ####################
 

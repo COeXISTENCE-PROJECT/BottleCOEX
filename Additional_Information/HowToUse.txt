@@ -16,10 +16,10 @@ containing .csv files with the experiment results for different parameter values
 The files EData.json, paramsData.json as well as network description files are also copied into the folder. 
 
 3) Run BottlePlotterTimeDep.py
-This plotter displays the results of experiments using the output .csv files generated in 2) as a grid of time(day)-dependent plots of travel times and vehicle counts. In particular, it generates the plots used in the Appendix (Supplementary Figures) to the manuscript submitted to Nature Communications. 
+This plotter displays the results of experiments using the output .csv files generated in 2) as a grid of time(day)-dependent plots of travel times and vehicle counts. In particular, it generates the plots used in the Appendix (Supplementary Figures) to the manuscript submitted to xxx. 
 
 4) Run   TODOTODO
-This plotter plots the summary figures used in the manuscript submitted to Nature Communications. 
+This plotter plots the summary figures used in the manuscript submitted to xxx. 
 
 
 

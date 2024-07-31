@@ -1,0 +1,26 @@
+Parameters and their allowed values:
+
+Model_Name: "Gumbel", "GumbelEps", "Logit", "EpsGreedy"   (learning&choice model of humans)
+FleetMode": ["1","0","0","1+0"]				  (fleet optimization mode - in this version the only allowed value)
+Alpha_Zero: 0.0 - 1.0    				  (Human learning rate)
+Epsilon: 0.0 - 1.0  				  	  (Human exploration rate)
+Logit_Exp_Coeff (LogitParam): 0.0 - (+infinity)	          (Dispersion gamma=1/beta in Logit/Gumbel models)
+Initial_Knowledge: "FreeFlow", "Pessimistic", "Optimistic"(Initial knowledge of humans drivers)
+Initial_Choice: "Argmin", "Random"			  (How do the humans choose initially, based on Initial_Knowledge)
+Only_Experience: true, false				  (Do humans learn from experience only?)
+Fleet_size:  0.0 - 1.0					  (Fraction of all vehicles which mutate into fleet)
+Fleet_introduction: 0 - (+infty)			  (Day on which the fleet of CAVs is introduced)
+FleetOptimizationOnset: 0 - (+infty)			  (When fleet begins applying its optimization strategy)
+FleetOptimizationEnd: 0 - (+infty)			  (When fleet begins ends its optimization strategy, by default the last day)
+LambdaHDV: (-infty) - (+infty)				  (Coefficient of the Target) 
+LambdaCAV: (-infty) - (+infty)				  (Coefficient of the Target)
+CAVTarget: "Selfish", "Malicious", "Diruptive", "Social", "Altruistic"
+totalVehicles: 0.0 - (+infty)				  (Different congestion Levels (typically 0.25-2.6 * capacity))			
+multiplier: 0 - (+infty)				  (totalVehicles * multiplier) prescribes the total number of vehicles
+dayRange: 1 - (+infty)					  (The number of days of simulation)
+RoadNetworks: "Net2Plain", 'Net3twoEqual", "NetBraess", "NetBraess2"  (The array with names of the file with road networks, by default one only)
+NetworkDayChange: 1 - infty			          (The days on which network parameters change)
+default + name 						  (The default value, the experiments allow to vary two values)
+MovingAverageStep					  (in this version obsolete)
+PlotCAVs: true, false					  (specifies whether there are CAVs to plot by the plotter)
+PlotMeanHDV: true, false				  (specifies whether plotter should plot Mean HDV travel time)	
