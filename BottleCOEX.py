@@ -10,9 +10,10 @@ from numpy import random
 from matplotlib import pyplot as plt
 
 from keychain import Keychain as kc
+from link import Link
 from route import Route
 from mode import Mode
-from utils import BPR, eps_greedy, routesCounts2linksCounts
+from utils import eps_greedy, routesCounts2linksCounts
 
 
 params = open(kc.INPUT_FILE)
@@ -29,20 +30,6 @@ DEFAULT_TOTALND = int(DEFAULT_TOTALVEHICLES)
 
 
 #############Classes definitions (Link, Route, HumanAgent, Mode, FleetOperatorAgent)####################
-class Link:
-
-    def __init__(self, t0, kappa, cap, power):
-        self.t0 = t0
-        self.kappa = kappa
-        self.cap = cap
-        self.power = power
-
-    def print(self):
-        print("t0:" + str(self.t0) + " cap:" + str(self.cap) + " kappa:" + str(self.kappa) + " power:" + str(self.power))
-
-    def travel_time(self, count):
-        return BPR(self.t0, self.kappa, self.cap, self.power, count)
-
 class HumanAgent:
 
     def __init__(self, human_params, jrange, model_name, learning_rate, learning_rate_decay, exploration_rate, exploration_rate_decay,
