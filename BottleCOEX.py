@@ -11,9 +11,9 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 
 from keychain import Keychain as kc
-from utilities import Route
-from utilities import createNetwork
-from utilities import Simulator
+from Utilities import Route
+from Utilities import createNetwork
+from Utilities import Simulator
 
 
 if __name__ == "__main__":

@@ -54,7 +54,7 @@ jrange = data_params[kc.DAY_RANGE]
 Labels_counts = ["HDV count on A", "HDV count on B", "CAV count on A", "CAV count on B"]
 Labels_countsTT = ["Travel time on A", "Travel time on B", "Mean HDV travel time", "Mean CAV travel time"]
             
-##################plot0A############
+################## plot0A ############
 
 colorNames = ["blue", "orange", "green", "red"]
 superior_title_end = ''
@@ -100,7 +100,7 @@ for exind in range(EXvalN):
         ax.grid(axis = 'y')
 plt.show()
 
-##################plot0B############
+################## plot0B ############
 
 fig = plt.figure()
 gs = fig.add_gridspec(EYvalN, EXvalN, hspace=0, wspace=0)
