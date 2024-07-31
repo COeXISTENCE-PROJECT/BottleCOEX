@@ -10,6 +10,8 @@ from numpy import random
 from matplotlib import pyplot as plt
 
 from keychain import Keychain as kc
+from route import Route
+from mode import Mode
 
 
 params = open(kc.INPUT_FILE)
@@ -40,19 +42,7 @@ class Link:
     def travel_time(self, count):
         return BPR(self.t0, self.kappa, self.cap, self.power, count)
 
-class Route:
 
-    def __init__(self, links, link_incidency, label):
-        self.link_incidency = link_incidency
-        self.label = label
-        self.t0 = self.travel_time(links, np.zeros(len(links)))
-        
-    def travel_time(self, links, counts_on_links):
-        tt = 0
-        for l in range(len(self.link_incidency)):
-            if(self.link_incidency[l] > 0):
-                tt = tt + links[l].travel_time(counts_on_links[l])
-        return tt
         
 class HumanAgent:
 
@@ -132,14 +122,6 @@ class HumanAgent:
                 self.curRoute = r
                 r = self.NR
             r = r+1
-
-class Mode:
-    
-    def __init__(self, n_steps_exact, n_steps_model, n_runs = 1, mode_name = ''):
-        self.n_steps_exact = int(n_steps_exact)
-        self.n_steps_model = int(n_steps_model)
-        self.n_runs = int(n_runs)
-        self.name = mode_name
 
 class FleetOperatorAgent:
 

@@ -61,7 +61,7 @@
 
         "HDVs" : {"defaultAlphaZero":0.2, "defaultEpsilon":0.1},
 
-        "multiplier": 1000,
+        "multiplier": 100,
         "dayRange": 400,
 
         "RoadNetworks": ["Net2Plain"],
