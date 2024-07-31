@@ -32,6 +32,8 @@ if __name__ == "__main__":
 
     net_params = params[RoadNetworks[0]]
     datadirpath = config_params["path" + config_params[kc.WHICH_PATH]]
+    mult = params_data[kc.MULTIPLIER]                                              
+
 
     ENAME = experiment_data[kc.NAME]
     EXaxis = experiment_data[kc.Xaxis]
@@ -45,7 +47,7 @@ if __name__ == "__main__":
     EYaxisName = experiment_data[kc.YaxisName]
 
     ## Create the network
-    NL, Links = createNetwork(net_params)
+    NL, Links = createNetwork(net_params, mult)
 
     for l in range(NL):
         print("Link " + str(l))

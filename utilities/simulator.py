@@ -125,7 +125,7 @@ def Simulator(RoadNetworks, NetworkDayChange, NL, Links, NR, Routes, human_param
                 fN = open(datadirpath + RoadNetworks[curNetwork] + ".json")
                 net_params = json.load(fN)
                 fN.close()
-                NL, Links = createNetwork(net_params)
+                NL, Links = createNetwork(net_params, mult)
         except:
             raise(Exception("Network update failed"))
 
