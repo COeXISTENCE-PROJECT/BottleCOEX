@@ -1,4 +1,6 @@
+
 class Mode:
+    
     def __init__(self, n_steps_exact: int, n_steps_model: int, n_runs: int = 1, mode_name: str = ''):
         """
         Initialize a Mode object.

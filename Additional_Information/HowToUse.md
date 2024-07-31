@@ -8,19 +8,19 @@ This document provides instructions for running the BottleCOEX simulator and gen
 
 ### 1. Run BottleCOEX.py
 
-The `BottleCOEX.py` script is the main simulator. It reads the path specified in `Config.json` and loads the following files from that path:
-- `EData.json`
-- `paramsData.json`
+The `BottleCOEX.py` script is the main simulator. It reads the path specified in config parameters of `params.json` and loads the following parameters from that path:
+- `EData`
+- `ParamsData`
 - Network description files (by default, only the two-route bottleneck `Net2Plain` is loaded. Sample other networks are in the `./Networks` folder).
 
 #### Default Path
 - Path `0` is the current folder and contains a sample experiment that runs quickly and produces output promptly.
 - To use data from a different experiment, set the path number to a different value (to reproduce the experiments stored in the `./Experiments` folder).
-- To create your own experiment, modify the `EData.json` and/or `paramsData.json` files and/or add a new path where the data for the experiment are contained. Allowed parameter values are specified in the file `SimulatorParamNames.txt`.
+- To create your own experiment, modify the `EData` and/or `ParamsData` files and/or add a new path where the data for the experiment are contained. Allowed parameter values are specified in the file `SimulatorParamNames.md`.
 
 ### 2. Output Generation
 
-The output of `BottleCOEX.py` is saved into the path folder in a subfolder named based on the experiment name and the varied parameters. For example, for the following values from `EData.json`:
+The output of `BottleCOEX.py` is saved into the path folder in a subfolder named based on the experiment name and the varied parameters. 
 
 ### 3. Run BottlePlotterTimeDep.py
 
